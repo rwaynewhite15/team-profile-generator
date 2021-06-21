@@ -120,6 +120,7 @@ function teamSizeInfo() {
 		if (teamSize.teamSize === 'No') {
 			//* If no more members need to be added, then the application is ended by choosing No and then the file is written to the HTML template
 			console.log("HTML Created!");
+            finishTeam(teamMembersArray)
 		}
 	});
 }
@@ -128,12 +129,14 @@ function teamSizeInfo() {
 function teamMemberLoop() {
 	inquirer.prompt(teamMemberRolePick).then((teamrole) => {
 		if (teamrole.teamMemberRoleType === 'Engineer') {
+            console.log('Please Submit Engineer Info');
 			inquirer.prompt(engineerQuestions).then((engineerBuild) => {
 				let engineer = new Engineer(engineerBuild.enginnerName, engineerBuild.engineerId, engineerBuild.engineerEmail, engineerBuild.engineerGithub);
 				teamMembersArray.push(engineer);
 				teamSizeInfo();
 			});
 		} else if (teamrole.teamMemberRoleType === 'Intern') {
+            console.log('Please Submit Intern Info');
 			inquirer.prompt(internQuestions).then((internBuild) => {
 				let intern = new Intern(internBuild.internName, internBuild.internId, internBuild.internEmail, internBuild.internSchool);
 				teamMembersArray.push(intern);
@@ -145,10 +148,14 @@ function teamMemberLoop() {
 
 // write team profile page and store those files in ./dist
 function finishTeam() {
-    // finish process by writing file, displaying success or error msg
-    fs.writeFile('./dist/team_page.html', getHTML(), (err) =>
-      err ? console.error(err) : console.log('Generated team page!')
-    );
+    let data = "TESTING! BOBBY"
+    fs.writeFile('./dist/team_page.html', data, (err) => {
+        if (err) 
+        console.log(err); 
+        else {
+        console.log("Team Page Generated");
+      }
+    });
 }
 
 cliStart();
