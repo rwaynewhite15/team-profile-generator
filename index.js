@@ -65,7 +65,7 @@ const engineerQuestions = [
 	{
 		type: 'input',
 		message: "What is this Engineer's name?",
-		name: 'enginnerName',
+		name: 'engineerName',
 	},
 	{
 		type: 'input',
@@ -81,6 +81,30 @@ const engineerQuestions = [
 		type: 'input',
 		message: "What is this Engineer's GitHub Profile Name?",
 		name: 'engineerGithub',
+	},
+];
+
+// Questions for the intern profile
+const internQuestions = [
+	{
+		type: 'input',
+		message: "What is this intern's name?",
+		name: 'internName',
+	},
+	{
+		type: 'input',
+		message: "What is this intern's ID number?",
+		name: 'internId',
+	},
+	{
+		type: 'input',
+		message: "What is this Engineer's email?",
+		name: 'internEmail',
+	},
+	{
+		type: 'input',
+		message: "What is this Engineer's school?",
+		name: 'engineerSchool',
 	},
 ];
 
@@ -104,7 +128,7 @@ inquirer
 // Function to build the team manager and then call the function to start building the team size
 function managerInfo() {
 	inquirer.prompt(managerQuestions).then((managerBuild) => {
-		let manager = new Manager(managerBuild.managerName, managerBuild.managerId, managerBuild.manageEmail, managerBuild.managerOfficeNumber);
+		let manager = new Manager(managerBuild.managerId, managerBuild.managerName, managerBuild.manageEmail, managerBuild.managerOfficeNumber);
 		teamMembersArray.push(manager);
 		teamSizeInfo();
 	});
@@ -131,14 +155,14 @@ function teamMemberLoop() {
 		if (teamrole.teamMemberRoleType === 'Engineer') {
             console.log('Please Submit Engineer Info');
 			inquirer.prompt(engineerQuestions).then((engineerBuild) => {
-				let engineer = new Engineer(engineerBuild.enginnerName, engineerBuild.engineerId, engineerBuild.engineerEmail, engineerBuild.engineerGithub);
+				let engineer = new Engineer(engineerBuild.enginnerId, engineerBuild.engineerName, engineerBuild.engineerEmail, engineerBuild.engineerGithub);
 				teamMembersArray.push(engineer);
 				teamSizeInfo();
 			});
 		} else if (teamrole.teamMemberRoleType === 'Intern') {
             console.log('Please Submit Intern Info');
 			inquirer.prompt(internQuestions).then((internBuild) => {
-				let intern = new Intern(internBuild.internName, internBuild.internId, internBuild.internEmail, internBuild.internSchool);
+				let intern = new Intern(internBuild.internId, internBuild.internName, internBuild.internEmail, internBuild.internSchool);
 				teamMembersArray.push(intern);
 				teamSizeInfo();
 			});
@@ -148,8 +172,44 @@ function teamMemberLoop() {
 
 // write team profile page and store those files in ./dist
 function finishTeam() {
-    let data = "TESTING! BOBBY"
-    fs.writeFile('./dist/team_page.html', data, (err) => {
+	const managerTemplate = manager => {
+		return `<div>${manager.name}</div>`
+	}
+	const engineerTemplate = engineer => {
+		return `<div>${engineer.name}</div>`
+	}
+	const internTemplate = intern => {
+		return `<div>${engineer.name}</div>`
+	}
+	let data = ``
+	for (i = 0; i < teamMembersArray.length; i++) {
+		if (teamMembersArray[i].getRole() === "Manager") {
+			data += managerTemplate(teamMembersArray[i])
+		}
+		else if (teamMembersArray[i].getRole() === "Engineer"){
+			data += engineerTemplate(teamMembersArray[i])
+		}
+		else if (teamMembersArray[i].getRole() === "Intern"){
+			data += internTemplate(teamMembersArray[i])
+		}
+	}
+	
+    const html = `
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>My Team</h1>
+    ${data}
+</body>
+</html>
+	`;
+    fs.writeFile('./dist/team_page.html', html, (err) => {
         if (err) 
         console.log(err); 
         else {
@@ -158,4 +218,4 @@ function finishTeam() {
     });
 }
 
-cliStart();
+cliStart();"seed": "node seeders/seed.js",
