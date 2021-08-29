@@ -98,12 +98,12 @@ const internQuestions = [
   },
   {
     type: "input",
-    message: "What is this Engineer's email?",
+    message: "What is this intern's email?",
     name: "internEmail",
   },
   {
     type: "input",
-    message: "What is this Engineer's school?",
+    message: "What is this intern's school?",
     name: "internSchool",
   },
 ];
