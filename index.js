@@ -245,7 +245,7 @@ function finishTeam() {
 		  Email:
 		  <a href="mailto:${intern.email}">${intern.email}</a>
 		</li>
-		<li class="list-group-item">School: ${intern.email}</li>
+		<li class="list-group-item">School: ${intern.school}</li>
 	  </ul>
 	</div>
   </div>`;

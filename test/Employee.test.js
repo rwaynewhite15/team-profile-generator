@@ -1,5 +1,5 @@
 const Employee = require("../lib/Employee");
-const e = new Employee('Foo', 1, 'mike@gmail.com');
+const e = new Employee(1, 'Foo', 'mike@gmail.com');
 
 test("Employee is object with properties", () => {
   expect(typeof e).toBe('object');
