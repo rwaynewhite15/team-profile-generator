@@ -104,7 +104,7 @@ const internQuestions = [
   {
     type: "input",
     message: "What is this Engineer's school?",
-    name: "engineerSchool",
+    name: "internSchool",
   },
 ];
 
